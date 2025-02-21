@@ -45,4 +45,18 @@ void   setup()
   display.print("    SYSTEM");
   display.display();
 
+delay(4000);
+
+  display.setCursor(0, 0);
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setCursor(0, 18);
+  display.print("Booting");
+  display.setCursor(0, 38);
+  display.print("Up ....");
+  display.display();
+
+  delay(3000);
+
+
 }
