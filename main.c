@@ -31,4 +31,18 @@ void   setup()
   display.display();
   display.setTextSize(1.75);
   display.setTextColor(WHITE);
+
+  display.setCursor(0, 0);
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setCursor(0, 0);
+  display.print("       AIR");
+  display.setCursor(0, 17);
+  display.print("   QUALITY");
+  display.setCursor(0, 34);
+  display.print("MONITORING");
+  display.setCursor(0, 51);
+  display.print("    SYSTEM");
+  display.display();
+
 }
