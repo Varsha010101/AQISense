@@ -60,3 +60,44 @@ delay(4000);
 
 
 }
+void loop() {
+  // Read sensor data
+  sensorValue = analogRead(A2);
+
+  Humidity = dht.readHumidity();
+  Temperature = dht.readTemperature();
+  Temp_Fahrenheit = dht.readTemperature(true);
+
+  if (isnan(Humidity) || isnan(Temperature) || isnan(Temp_Fahrenheit)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+
+  // Control LEDs based on sensor value (air quality)
+  if (sensorValue <= 40) {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, LOW);
+  } else if (sensorValue <= 60) {
+    digitalWrite(5, HIGH);
+    digitalWrite(4, LOW);
+  } else {
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    delay(200);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    delay(200);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    delay(200);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    delay(200);
+    digitalWrite(4, HIGH);
+    digitalWrite(5, HIGH);
+    delay(200);
+    digitalWrite(4, LOW);
+    digitalWrite(5, LOW);
+    delay(200);
+  }
+}
