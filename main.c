@@ -61,43 +61,71 @@ delay(4000);
 
 }
 void loop() {
-  // Read sensor data
-  sensorValue = analogRead(A2);
+  // Continue from the previous commit...
 
-  Humidity = dht.readHumidity();
-  Temperature = dht.readTemperature();
-  Temp_Fahrenheit = dht.readTemperature(true);
+  // Update display with air quality, temperature, and humidity
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setCursor(0, 0);
+  display.print("Air");
+  display.setCursor(0, 17);
+  display.print("Quality : ");
+  display.setTextSize(3);
+  display.setCursor(0, 43);
+  display.print(sensorValue, DEC);
+  display.print(" ");
+  display.setCursor(50, 50);
+  display.setTextSize(2);
+  display.print("PPM");
+  display.display();
+  delay(1600);
 
-  if (isnan(Humidity) || isnan(Temperature) || isnan(Temp_Fahrenheit)) {
-    Serial.println(F("Failed to read from DHT sensor!"));
-    return;
-  }
+  display.setCursor(0, 0);
+  display.clearDisplay();
+  display.setTextSize(1);
+  display.setCursor(0, 0);
+  display.print("Temperature: ");
+  display.setTextSize(2);
+  display.setCursor(0, 12);
+  display.print(Temperature);
+  display.print(" ");
+  display.setTextSize(1);
+  display.cp437(true);
+  display.write(167);
+  display.setTextSize(2);
+  display.print("C");
+  display.setTextSize(1);
+  display.setCursor(0, 35);
+  display.print("Humidity : ");
+  display.setTextSize(2);
+  display.setCursor(0, 47);
+  display.print(Humidity);
+  display.print(" %");
+  display.display();
+  delay(1600);
 
-  // Control LEDs based on sensor value (air quality)
+  // Check air quality status and update display
   if (sensorValue <= 40) {
-    digitalWrite(4, HIGH);
-    digitalWrite(5, LOW);
-  } else if (sensorValue <= 60) {
-    digitalWrite(5, HIGH);
-    digitalWrite(4, LOW);
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(0, 10);
+    display.print("AIR");
+    display.setCursor(0, 28);
+    display.print("QUALITY");
+    display.setCursor(0, 46);
+    display.print("IS GOOD");
+    display.display();
+    delay(1100);
   } else {
-    digitalWrite(4, HIGH);
-    digitalWrite(5, HIGH);
-    delay(200);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    delay(200);
-    digitalWrite(4, HIGH);
-    digitalWrite(5, HIGH);
-    delay(200);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    delay(200);
-    digitalWrite(4, HIGH);
-    digitalWrite(5, HIGH);
-    delay(200);
-    digitalWrite(4, LOW);
-    digitalWrite(5, LOW);
-    delay(200);
+    display.clearDisplay();
+    display.setTextSize(2);
+    display.setCursor(0, 10);
+    display.print("AIR");
+    display.setCursor(0, 28);
+    display.print("QUALITY");
+    display.setCursor(0, 46);
+    display.print("IS BAD");
+    display.display();
+    delay(1100);
   }
 }
