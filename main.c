@@ -60,10 +60,82 @@ delay(4000);
 
 
 }
-void loop() {
-  // Continue from the previous commit...
+void loop()
+{
+  
+  sensorValue = analogRead(A2);        
 
-  // Update display with air quality, temperature, and humidity
+  Humidity = dht.readHumidity();
+  Temperature = dht.readTemperature();
+  Temp_Fahrenheit = dht.readTemperature(true);
+  
+  if (isnan(Humidity) || isnan(Temperature) || isnan(Temp_Fahrenheit)) {
+    Serial.println(F("Failed to read from DHT sensor!"));
+    return;
+  }
+  if((sensorValue<=40))
+  {
+    digitalWrite(4,HIGH);
+    digitalWrite(5,LOW);
+  }else if(sensorValue<=60)
+  {
+    digitalWrite(5,HIGH);
+    digitalWrite(4,LOW);
+  }else
+  {
+    digitalWrite(4,HIGH);
+    digitalWrite(5,HIGH);
+    delay(200);
+    digitalWrite(4,LOW);
+    digitalWrite(5,LOW);
+    delay(200);
+    digitalWrite(4,HIGH);
+    digitalWrite(5,HIGH);
+    delay(200);
+    digitalWrite(4,LOW);
+    digitalWrite(5,LOW);
+    delay(200);
+    digitalWrite(4,HIGH);
+    digitalWrite(5,HIGH);
+    delay(200);
+    digitalWrite(4,LOW);
+    digitalWrite(5,LOW);
+    delay(200);
+  }
+  if(Temperature>30)
+  {
+    digitalWrite(6,HIGH);
+    digitalWrite(7,HIGH);
+    tone(11,400,2000);
+    delay(200);
+    tone(11,800,2000);
+    delay(200);
+    digitalWrite(6,LOW);
+    digitalWrite(7,LOW);
+    noTone(11);
+    delay(200);
+    digitalWrite(6,HIGH);
+    digitalWrite(7,HIGH);
+    tone(11,400,2000);
+    delay(200);
+    tone(11,800,2000);
+    delay(200);
+    digitalWrite(6,LOW);
+    digitalWrite(7,LOW);
+    noTone(11);
+    delay(200);
+    digitalWrite(6,HIGH);
+    digitalWrite(7,HIGH);
+    tone(11,400,2000);
+    delay(200);
+    tone(11,800,2000);
+    delay(200);
+    digitalWrite(6,LOW);
+    digitalWrite(7,LOW);
+    noTone(11);
+    delay(200);
+  }
+
   display.clearDisplay();
   display.setTextSize(2);
   display.setCursor(0, 0);
@@ -79,7 +151,7 @@ void loop() {
   display.print("PPM");
   display.display();
   delay(1600);
-
+  
   display.setCursor(0, 0);
   display.clearDisplay();
   display.setTextSize(1);
@@ -104,8 +176,20 @@ void loop() {
   display.display();
   delay(1600);
 
-  // Check air quality status and update display
-  if (sensorValue <= 40) {
+  if(sensorValue<=40){
+  display.clearDisplay();  
+  display.setTextSize(2);
+  display.setCursor(0, 10);
+  display.print("AIR");
+  display.setCursor(0, 28);
+  display.print("QUALITY");
+  display.setCursor(0, 46);
+  display.print("IS GOOD");
+  display.display();
+  delay(1100);
+  }
+  else
+  {
     display.clearDisplay();
     display.setTextSize(2);
     display.setCursor(0, 10);
@@ -113,19 +197,25 @@ void loop() {
     display.setCursor(0, 28);
     display.print("QUALITY");
     display.setCursor(0, 46);
-    display.print("IS GOOD");
-    display.display();
-    delay(1100);
-  } else {
-    display.clearDisplay();
-    display.setTextSize(2);
-    display.setCursor(0, 10);
-    display.print("AIR");
-    display.setCursor(0, 28);
-    display.print("QUALITY");
-    display.setCursor(0, 46);
-    display.print("IS BAD");
+    display.print("IS  BAD");
     display.display();
     delay(1100);
   }
+  if(Temperature>30){
+  display.clearDisplay();  
+  display.setTextSize(2);
+  display.setCursor(0, 20);
+  display.print("  HIGH   ");
+  display.setCursor(0, 40);
+  display.print("  TEMP... ");
+  display.display();
+  delay(900);
+  }
+
+  digitalWrite(5,LOW);
+  digitalWrite(4,LOW);
+  digitalWrite(6,LOW);
+  digitalWrite(7,LOW);
+
+                                   
 }
